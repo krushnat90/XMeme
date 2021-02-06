@@ -5,32 +5,29 @@
  */
 package com.krushnat90.xmeme.api;
 
-import com.krushnat90.xmeme.model.Meme;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CookieValue;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.krushnat90.xmeme.model.Meme;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
 public interface MemesApi {
@@ -41,9 +38,10 @@ public interface MemesApi {
         
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     @RequestMapping(value = "/memes",
+    	consumes = { "application/json" }, 
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Long> addMeme(@NotNull @Parameter(in = ParameterIn.QUERY, description = "Name of the Meme poster" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "name", required = true) String name, @NotNull @Parameter(in = ParameterIn.QUERY, description = "URL of the meme image" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "url", required = true) String url, @NotNull @Parameter(in = ParameterIn.QUERY, description = "caption for the meme" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "caption", required = true) String caption);
+    ResponseEntity<ObjectNode> addMeme(@NotNull @Valid @RequestBody Meme meme);
 
 
     @Operation(summary = "Retrieve latest Memes", description = "This endpoint will retrieve latest 100 memes", tags={ "XMemeMain" })
@@ -59,13 +57,11 @@ public interface MemesApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Meme retrieved successfully", content = @Content(schema = @Schema(implementation = Meme.class))),
         
-        @ApiResponse(responseCode = "400", description = "Meme ID is not valid. Kindly Verify"),
-        
         @ApiResponse(responseCode = "404", description = "There is no Meme present for the given Meme ID") })
     @RequestMapping(value = "/memes/{memeId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") Long memeId);
+    ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") String memeId);
 
 }
 

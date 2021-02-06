@@ -1,7 +1,11 @@
 package com.krushnat90.xmeme.api;
 
+import com.krushnat90.xmeme.common.Constants;
 import com.krushnat90.xmeme.model.Meme;
+import com.krushnat90.xmeme.service.MemeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -13,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,12 +32,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
 @RestController
 public class MemesApiController implements MemesApi {
 
@@ -41,33 +48,38 @@ public class MemesApiController implements MemesApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
+    
+    @Autowired
+    MemeService memeService;
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
     public MemesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    public ResponseEntity<Long> addMeme(@NotNull @Parameter(in = ParameterIn.QUERY, description = "Name of the Meme poster" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "name", required = true) String name,@NotNull @Parameter(in = ParameterIn.QUERY, description = "URL of the meme image" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "url", required = true) String url,@NotNull @Parameter(in = ParameterIn.QUERY, description = "caption for the meme" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "caption", required = true) String caption) {
+    public ResponseEntity<ObjectNode> addMeme(@NotNull @RequestBody Meme meme) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Long>(objectMapper.readValue("0", Long.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
+            	String id = memeService.addMeme(meme);
+            	
+                return new ResponseEntity<ObjectNode>(objectMapper.createObjectNode().put(Constants.RESPONSE_ID, id), HttpStatus.OK);
+            } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Long>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<ObjectNode>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<Long>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<ObjectNode>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<List<Meme>> findLatestMemes() {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<Meme>>(objectMapper.readValue("[ {\n  \"memeUrl\" : \"memeUrl\",\n  \"memeName\" : \"memeName\",\n  \"memeId\" : 0,\n  \"dislikes\" : 1,\n  \"memeCaption\" : \"memeCaption\",\n  \"likes\" : 6\n}, {\n  \"memeUrl\" : \"memeUrl\",\n  \"memeName\" : \"memeName\",\n  \"memeId\" : 0,\n  \"dislikes\" : 1,\n  \"memeCaption\" : \"memeCaption\",\n  \"likes\" : 6\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
+                return new ResponseEntity<List<Meme>>(memeService.getLatestMemes(), HttpStatus.OK);
+            } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<List<Meme>>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -76,12 +88,16 @@ public class MemesApiController implements MemesApi {
         return new ResponseEntity<List<Meme>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") Long memeId) {
+    public ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") String memeId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Meme>(objectMapper.readValue("{\n  \"memeUrl\" : \"memeUrl\",\n  \"memeName\" : \"memeName\",\n  \"memeId\" : 0,\n  \"dislikes\" : 1,\n  \"memeCaption\" : \"memeCaption\",\n  \"likes\" : 6\n}", Meme.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
+            	Optional<Meme> meme = memeService.getMemeById(memeId);
+            	if(meme.isPresent())
+            		return new ResponseEntity<Meme>(meme.get(), HttpStatus.OK);
+            	else
+            		return new ResponseEntity<Meme>(HttpStatus.NOT_FOUND);
+            } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Meme>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
