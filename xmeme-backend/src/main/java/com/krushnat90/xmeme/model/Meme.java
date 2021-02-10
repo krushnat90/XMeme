@@ -2,8 +2,6 @@ package com.krushnat90.xmeme.model;
 
 import java.util.Objects;
 
-import javax.annotation.Generated;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * Meme
  */
 @Validated
-@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
-
+	
 @Document(collection = "MemeMaster")
 public class Meme {
 

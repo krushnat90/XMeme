@@ -1,13 +1,10 @@
 package com.krushnat90.xmeme.config;
 
-import javax.annotation.Generated;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
 @Configuration
 public class SwaggerUiConfiguration implements WebMvcConfigurer {
     @Override

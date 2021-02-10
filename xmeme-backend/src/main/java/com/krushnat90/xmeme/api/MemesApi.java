@@ -7,7 +7,6 @@ package com.krushnat90.xmeme.api;
 
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -29,7 +28,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
 public interface MemesApi {
 
     @Operation(summary = "Add new Meme", description = "", tags={ "XMemeMain" })
