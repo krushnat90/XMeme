@@ -7,9 +7,9 @@ import com.krushnat90.xmeme.model.Meme;
 
 public interface MemeCustomRepository {
 	
-	String getMemeId();
+	Long getMemeId();
 	
-	String addMeme(Meme meme);
+	Long addMeme(Meme meme);
 	
 	List<Meme> getLatestMemes();
 	

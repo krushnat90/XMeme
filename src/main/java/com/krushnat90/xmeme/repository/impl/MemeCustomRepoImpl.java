@@ -32,9 +32,9 @@ public class MemeCustomRepoImpl implements MemeCustomRepository {
 	MongoTemplate mongoTemplate;
 
 	@Override
-	public String getMemeId() {
+	public Long getMemeId() {
 
-		String seqVal = mongoTemplate
+		Long seqVal = mongoTemplate
 				.findAndModify(new Query(Criteria.where(Constants.SEQEUNCE_ID).is(Constants.SEQEUNCE_ID_VAL)),
 						new Update().inc(Constants.SEQEUNCE_VAL_COL, Constants.SEQEUNCE_VAL),
 						new FindAndModifyOptions().returnNew(true), MemeSequence.class)
@@ -44,7 +44,7 @@ public class MemeCustomRepoImpl implements MemeCustomRepository {
 	}
 
 	@Override
-	public String addMeme(Meme meme) {
+	public Long addMeme(Meme meme) {
 		log.debug("Inside Add Repo");
 		return memeJPARepo.save(meme).getId();
 	}

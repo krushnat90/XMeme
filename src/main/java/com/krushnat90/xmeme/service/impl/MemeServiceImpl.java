@@ -23,10 +23,10 @@ public class MemeServiceImpl implements MemeService {
 
 	@Override
 	@Transactional
-	public String addMeme(Meme meme) {
+	public Long addMeme(Meme meme) {
 		log.debug("Inside Add Service : params  :"+meme.getMemeName()+"|"+meme.getMemeUrl()+"|"+meme.getMemeCaption());
 		meme.memeId(memeRepository.getMemeId()).likes(0L).dislikes(0L);
-		String idVal = memeRepository.addMeme(meme);
+		Long idVal = memeRepository.addMeme(meme);
 		log.debug("Exiting Add service : id :"+idVal);
 		return idVal;
 	}

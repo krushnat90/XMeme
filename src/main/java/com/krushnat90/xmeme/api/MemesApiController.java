@@ -62,8 +62,7 @@ public class MemesApiController implements MemesApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-            	String id = memeService.addMeme(meme);
-            	
+            	Long id = memeService.addMeme(meme);
                 return new ResponseEntity<ObjectNode>(objectMapper.createObjectNode().put(Constants.RESPONSE_ID, id), HttpStatus.OK);
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);

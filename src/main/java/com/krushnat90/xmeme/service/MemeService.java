@@ -7,7 +7,7 @@ import com.krushnat90.xmeme.model.Meme;
 
 public interface MemeService {
 
-	String addMeme(Meme meme);
+	Long addMeme(Meme meme);
 
 	Optional<Meme> getMemeById(String memeId);
 

@@ -23,7 +23,7 @@ public class Meme {
 
 	@Id
 	@JsonProperty("memeId")
-	private String id;
+	private Long id;
 
 	/*@JsonProperty("memeId")
 	private Long memeId = null;*/
@@ -43,16 +43,16 @@ public class Meme {
 	@JsonProperty("dislikes")
 	private Long dislikes = null;
 
-	public Meme memeId(String memeId) {
+	public Meme memeId(Long memeId) {
 		this.id = memeId;
 		return this;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

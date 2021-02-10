@@ -6,17 +6,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class MemeSequence {
 	
 	private String id;
-	private String sequencevalue;
+	private Long sequencevalue;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getSeqValue() {
+	public Long getSeqValue() {
 		return sequencevalue;
 	}
-	public void setSeqValue(String seqValue) {
+	public void setSeqValue(Long seqValue) {
 		this.sequencevalue = seqValue;
 	}
 	

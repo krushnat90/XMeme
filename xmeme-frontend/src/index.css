@@ -1,0 +1,28 @@
+/* Bootstrap Import */
+@import url(https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css);
+
+
+
+.vertical-scrollable { 
+  /* position: absolute;  */
+  /* background-color: red; */
+  /* width: 100%; */
+  margin: 0 auto;
+  height: 500px; 
+  /* right: 180px;  */
+  width: 100%; 
+  overflow-y: scroll; 
+  
+} 
+
+.vertical-scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
