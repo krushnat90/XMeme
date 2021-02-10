@@ -43,66 +43,81 @@ import java.util.Optional;
 @RestController
 public class MemesApiController implements MemesApi {
 
-    private static final Logger log = LoggerFactory.getLogger(MemesApiController.class);
+	private static final Logger log = LoggerFactory.getLogger(MemesApiController.class);
 
-    private final ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 
-    private final HttpServletRequest request;
-    
-    @Autowired
-    MemeService memeService;
+	private final HttpServletRequest request;
 
-    @Autowired
-    public MemesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
-    }
+	@Autowired
+	MemeService memeService;
 
-    public ResponseEntity<ObjectNode> addMeme(@NotNull @RequestBody Meme meme) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-            	Long id = memeService.addMeme(meme);
-                return new ResponseEntity<ObjectNode>(objectMapper.createObjectNode().put(Constants.RESPONSE_ID, id), HttpStatus.OK);
-            } catch (Exception e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<ObjectNode>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+	@Autowired
+	public MemesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+		this.objectMapper = objectMapper;
+		this.request = request;
+	}
 
-        return new ResponseEntity<ObjectNode>(HttpStatus.NOT_IMPLEMENTED);
-    }
+	public ResponseEntity<ObjectNode> addMeme(@NotNull @RequestBody Meme meme) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				Long id = memeService.addMeme(meme);
+				return new ResponseEntity<ObjectNode>(objectMapper.createObjectNode().put(Constants.RESPONSE_ID, id),
+						HttpStatus.OK);
+			} catch (Exception e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<ObjectNode>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 
-    public ResponseEntity<List<Meme>> findLatestMemes() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Meme>>(memeService.getLatestMemes(), HttpStatus.OK);
-            } catch (Exception e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Meme>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+		return new ResponseEntity<ObjectNode>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
-        return new ResponseEntity<List<Meme>>(HttpStatus.NOT_IMPLEMENTED);
-    }
+	public ResponseEntity<List<Meme>> findLatestMemes() {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				return new ResponseEntity<List<Meme>>(memeService.getLatestMemes(), HttpStatus.OK);
+			} catch (Exception e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<List<Meme>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 
-    public ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") String memeId) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-            	Optional<Meme> meme = memeService.getMemeById(memeId);
-            	if(meme.isPresent())
-            		return new ResponseEntity<Meme>(meme.get(), HttpStatus.OK);
-            	else
-            		return new ResponseEntity<Meme>(HttpStatus.NOT_FOUND);
-            } catch (Exception e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Meme>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+		return new ResponseEntity<List<Meme>>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
-        return new ResponseEntity<Meme>(HttpStatus.NOT_IMPLEMENTED);
-    }
+	public ResponseEntity<Meme> getMemeById(
+			@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required = true, schema = @Schema()) @PathVariable("memeId") Long memeId) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
+				Optional<Meme> meme = memeService.getMemeById(memeId);
+				if (meme.isPresent())
+					return new ResponseEntity<Meme>(meme.get(), HttpStatus.OK);
+				else
+					return new ResponseEntity<Meme>(HttpStatus.NOT_FOUND);
+			} catch (Exception e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<Meme>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		return new ResponseEntity<Meme>(HttpStatus.NOT_IMPLEMENTED);
+	}
+
+	@Override
+	public ResponseEntity<Meme> updateMemeById(
+			@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required = true, schema = @Schema()) @PathVariable("memeId") Long memeId,
+			@NotNull @RequestBody Meme meme) {
+		meme.memeId(memeId);
+		if (memeService.updateMemeById(meme) == 1) {
+			return new ResponseEntity<Meme>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Meme>(HttpStatus.NOT_FOUND);
+		}
+
+	}
 
 }

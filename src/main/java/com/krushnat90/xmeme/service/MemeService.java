@@ -9,8 +9,9 @@ public interface MemeService {
 
 	Long addMeme(Meme meme);
 
-	Optional<Meme> getMemeById(String memeId);
+	Optional<Meme> getMemeById(Long memeId);
 
 	List<Meme> getLatestMemes();
-
+	
+	int updateMemeById(Meme meme);
 }

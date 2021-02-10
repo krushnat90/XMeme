@@ -7,6 +7,7 @@ package com.krushnat90.xmeme.api;
 
 import java.util.List;
 
+import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.krushnat90.xmeme.model.Meme;
@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-02-05T16:33:47.740Z[GMT]")
 public interface MemesApi {
 
     @Operation(summary = "Add new Meme", description = "", tags={ "XMemeMain" })
@@ -61,7 +61,17 @@ public interface MemesApi {
     @RequestMapping(value = "/memes/{memeId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") String memeId);
+    ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") Long memeId);
+    
+    @Operation(summary = "Update a mem using its unique ID", description = "Updates a single Meme.", tags={ "XMemeMain" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Meme updated successfully", content = @Content(schema = @Schema(implementation = Meme.class))),
+        
+        @ApiResponse(responseCode = "404", description = "There is no Meme present for the given Meme ID") })
+    @RequestMapping(value = "/memes/{memeId}",
+        consumes = { "application/json" }, 
+        method = RequestMethod.PATCH)
+    ResponseEntity<Meme> updateMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") Long memeId, @NotNull @Valid @RequestBody Meme meme);
 
 }
 

@@ -13,5 +13,7 @@ public interface MemeCustomRepository {
 	
 	List<Meme> getLatestMemes();
 	
-	Optional<Meme> getMemeById(String id);
+	Optional<Meme> getMemeById(Long id);
+	
+	void updateMemeById(Meme meme);
 }

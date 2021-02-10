@@ -58,9 +58,14 @@ public class MemeCustomRepoImpl implements MemeCustomRepository {
 	}
 
 	@Override
-	public Optional<Meme> getMemeById(String id) {
+	public Optional<Meme> getMemeById(Long id) {
 		log.debug("Inside getMemeById");
 		return memeJPARepo.findById(id);
+	}
+
+	@Override
+	public void updateMemeById(Meme meme) {
+		mongoTemplate.save(meme);
 	}
 
 }

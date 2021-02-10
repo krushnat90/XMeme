@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.krushnat90.xmeme.model.Meme;
 
 @Repository
-public interface MemeRepository extends MongoRepository<Meme, String> {
+public interface MemeRepository extends MongoRepository<Meme, Long> {
 
 }
