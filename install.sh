@@ -17,7 +17,13 @@ sudo apt update
 sudo apt install -y mongodb-org
 sudo systemctl start mongod.service
 
-##create necessary tables at mongo
+#create necessary tables at mongo
 mongo < mongodb-starter.js
+
+#node
+curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
+sudo bash nodesource_setup.sh
+sudo apt install -y nodejs
+
 
 echo "install done..."

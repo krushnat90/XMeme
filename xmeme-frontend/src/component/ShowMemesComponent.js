@@ -20,8 +20,10 @@ class ShowMemesComponent extends Component{
     }
 
     loadLatestMemes(){
+        
         DataAccessService.getLatestMemes().then(
             resp => {
+                console.log(resp);
                 this.setState({memes:resp.data})
             }
         )
@@ -40,10 +42,10 @@ class ShowMemesComponent extends Component{
                                 <div class="card text-left" style={{ width: '30em',marginBottom: 12 }}>
                                     
                                     <div class="card-body">
-                                        <h5 class="card-title">{meme.memeName}</h5>
-                                        <p class="card-text">{meme.memeCaption}</p>
+                                        <h5 class="card-title">{meme.name}</h5>
+                                        <p class="card-text">{meme.caption}</p>
                                     </div>
-                                    <img class="card-img-bottom img-responsive" src={meme.memeUrl} alt="Card image cap"/>
+                                    <img class="card-img-bottom img-responsive" src={meme.url} alt="Card image cap"/>
                                 </div>
                             
                             )

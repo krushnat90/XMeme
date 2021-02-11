@@ -10,9 +10,9 @@ class AddMemeComponent extends Component{
         super(props);
 
         this.state={
-            memerName:'',
-            memeUrl:'',
-            memeCaption:'',
+            name:'',
+            url:'',
+            caption:'',
             message : '',
             errorMessage : '',
         }
@@ -52,23 +52,16 @@ class AddMemeComponent extends Component{
 
     submit(val){
         let Meme = {
-            memeName: val.memerName,
-            memeUrl: val.memeUrl,
-            memeCaption: val.memeCaption
+            name: val.memerName,
+            url: val.memeUrl,
+            caption: val.memeCaption
         }
         DataAccessService.addMeme(Meme).then(resp => {
             this.state.message='Meme added successfully'
-            this.clearValues();
         }).catch(error => {
             this.state.message='Meme could not be added due to an error'
             
         }).then(() => this.props.parentMethod())
-    }
-
-    clearValues(){
-        this.state.memerName=''
-        this.state.memeUrl=''
-        this.state.memeCaption=''
     }
 
     render(){
