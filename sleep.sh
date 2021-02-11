@@ -1,4 +1,4 @@
 #!/bin/bash
 
 #sleep for a minute
-sleep 1m;
+sleep 5m;
