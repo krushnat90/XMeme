@@ -19,19 +19,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Meme {
 
 	@Id
-	@JsonProperty("memeId")
+	@JsonProperty("id")
 	private Long id;
 
 	/*@JsonProperty("memeId")
 	private Long memeId = null;*/
 
-	@JsonProperty("memeName")
+	@JsonProperty("name")
 	private String memeName = null;
 
-	@JsonProperty("memeUrl")
+	@JsonProperty("url")
 	private String memeUrl = null;
 
-	@JsonProperty("memeCaption")
+	@JsonProperty("caption")
 	private String memeCaption = null;
 
 	@JsonProperty("likes")
@@ -45,6 +45,7 @@ public class Meme {
 		return this;
 	}
 
+	@Schema(description = "meme id")
 	public Long getId() {
 		return id;
 	}
@@ -61,7 +62,7 @@ public class Meme {
 	
 	
 	
-	@Schema(description = "")
+	
 
 	/*public Long getMemeId() {
 		return memeId;
