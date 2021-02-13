@@ -4,7 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Home redirection to swagger api documentation 
+ * @author Krishnakant Thakur
+ *
  */
 @Controller
 public class HomeController {

@@ -12,6 +12,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
+/**
+ * @author Krishnakant Thakur
+ *
+ */
 @Configuration
 @ComponentScan("com.krushnat90.xmeme")
 public class MemeAppConfig {

@@ -2,6 +2,10 @@ package com.krushnat90.xmeme.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @author Krishnakant Thakur
+ *
+ */
 @Document(collection="MemeIDCounter")
 public class MemeSequence {
 	

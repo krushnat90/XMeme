@@ -1,5 +1,9 @@
 package com.krushnat90.xmeme.common;
 
+/**
+ * @author Krishnakant Thakur
+ *
+ */
 public class Constants {
 	
 	public static final String SEQEUNCE_ID="_id";
