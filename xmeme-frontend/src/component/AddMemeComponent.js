@@ -134,16 +134,16 @@ class AddMemeComponent extends Component{
                                                             </button>
                                                             </div>}
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-sm">
                                     <Field className="form-control" type="text" name="memerName"  placeholder="Name of meme poster"/>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-sm">
                                     <Field className="form-control" type="text" name="memeUrl"  placeholder="URL of the Meme"/>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-sm">
                                     <Field className="form-control" type="text" name="memeCaption"  placeholder="Caption"/>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-sm">
                                     <button className="btn btn-success" type="submit">Add your meme</button>
                                     </div>
                                 </div>

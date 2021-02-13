@@ -71,7 +71,7 @@ class ShowMemesComponent extends Component{
 
     render() {
         return (
-            <div>
+            <div class="Memeclass">
                 <AddMemeComponent parentMethod={this.loadLatestMemes}/>
                 <hr/>
                 <center>
@@ -79,7 +79,7 @@ class ShowMemesComponent extends Component{
                         {
                             this.state.memes.map(
                                 meme =>
-                                <div class="card text-left" style={{ width: '30em',marginBottom: 12 }}>
+                                <div class="card text-left" style={{ width: '90%',maxWidth:'40em',marginBottom: 12 }}>
                                     
                                     <div class="card-body">
                                     <button type="button" class="btn btn-primary float-right" onClick={() => this.editButtonClick(meme)}>Edit</button>
