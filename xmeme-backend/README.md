@@ -1,8 +1,8 @@
 # XMeme - A meme streaming application
 
-API :- <server>/memes
+API :- server-url/memes
 
-Know what it can do with swagger docs at :- <server>/ or <server>/swagger-ui 
+Know what it can do with swagger docs at :- server-url/ or server-url/swagger-ui 
 
 ## Overview  
 We can add, Edit and find memes.
