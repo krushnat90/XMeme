@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.krushnat90.xmeme.model.Meme;
 
+/**
+ * @author Krishnakant Thakur
+ *
+ */
 @Repository
 public interface MemeRepository extends MongoRepository<Meme, Long> {
 

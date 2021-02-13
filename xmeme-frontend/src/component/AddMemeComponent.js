@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import validator from 'validator'
+
 import DataAccessService from '../service/DataAccessService';
 import { Redirect } from "react-router-dom";
 
@@ -41,6 +43,12 @@ class AddMemeComponent extends Component{
             return this.state.errorMessage;
         }
 
+        else if(!validator.isURL(val.memeUrl)){
+            this.state.errorMessage='URL should be a valid image URL'
+            this.state.message=''
+            return this.state.errorMessage;
+        }
+
         else if(!val.memeCaption){
             this.state.errorMessage='Caption for the meme is mandatory'
             this.state.message=''
@@ -50,6 +58,21 @@ class AddMemeComponent extends Component{
         return this.state.errorMessage;
     }
 
+    //close button functionality for error
+    hideErrorAlert(){
+        this.setState({
+            errorMessage: false,
+        });
+    }
+
+    //close button functionality for message
+    hideMessageAlert(){
+        this.setState({
+            message: false,
+        });
+    }
+
+    //submit form data and make rest call to add api
     submit(val){
         let Meme = {
             name: val.memerName,
@@ -58,14 +81,25 @@ class AddMemeComponent extends Component{
         }
         DataAccessService.addMeme(Meme).then(resp => {
             this.state.message='Meme added successfully'
+            val.memerName='';
+            val.memeUrl='';
+            val.memeCaption='';
         }).catch(error => {
-            this.state.message='Meme could not be added due to an error'
+            console.log(error.response.status)
+            if(error.response.status == 409){
+                this.state.errorMessage= 'This meme already exists'
+            }
+            else{
+            this.state.errorMessage= 'Meme could not be added due to an internal error'
+            }
             
-        }).then(() => this.props.parentMethod())
-    }
+            
+        }).then(() =>{ 
+            console.log('ending submit')
+            this.props.parentMethod()})
+        }
 
     render(){
-
         let { memerName, memeUrl, memeCaption } = this.state;
 
         return (
@@ -81,8 +115,24 @@ class AddMemeComponent extends Component{
                     {
                         (props) => (
                             <Form>
-                                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
-                                {this.state.errorMessage && <div className="alert alert-warning">{this.state.errorMessage}</div>}
+                                {this.state.message && <div className="alert alert-success" id="site-message">{this.state.message}
+                                                            <button type="button" 
+                                                                className="close" 
+                                                                data-dismiss="alert" 
+                                                                aria-label="Close"
+                                                                onClick={() => this.hideMessageAlert()}>
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>}
+                                {this.state.errorMessage && <div className="alert alert-warning" role="alert">{this.state.errorMessage}
+                                                            <button type="button" 
+                                                                className="close" 
+                                                                data-dismiss="alert" 
+                                                                aria-label="Close"
+                                                                onClick={() => this.hideErrorAlert()}>
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            </div>}
                                 <div class="row">
                                     <div class="col">
                                     <Field className="form-control" type="text" name="memerName"  placeholder="Name of meme poster"/>

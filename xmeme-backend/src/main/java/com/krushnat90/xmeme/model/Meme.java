@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * Meme
  */
 @Validated
-	
+
 @Document(collection = "MemeMaster")
 public class Meme {
 
@@ -22,8 +22,9 @@ public class Meme {
 	@JsonProperty("id")
 	private Long id;
 
-	/*@JsonProperty("memeId")
-	private Long memeId = null;*/
+	/*
+	 * @JsonProperty("memeId") private Long memeId = null;
+	 */
 
 	@JsonProperty("name")
 	private String memeName = null;
@@ -34,17 +35,16 @@ public class Meme {
 	@JsonProperty("caption")
 	private String memeCaption = null;
 
-	@JsonProperty("likes")
-	private Long likes = null;
-
-	@JsonProperty("dislikes")
-	private Long dislikes = null;
-
 	public Meme memeId(Long memeId) {
 		this.id = memeId;
 		return this;
 	}
 
+	/**
+	 * Get memeId
+	 * 
+	 * @return memeId
+	 **/
 	@Schema(description = "meme id")
 	public Long getId() {
 		return id;
@@ -53,24 +53,6 @@ public class Meme {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	/**
-	 * Get memeId
-	 * 
-	 * @return memeId
-	 **/
-	
-	
-	
-	
-
-	/*public Long getMemeId() {
-		return memeId;
-	}
-
-	public void setMemeId(Long memeId) {
-		this.memeId = memeId;
-	}*/
 
 	public Meme memeName(String memeName) {
 		this.memeName = memeName;
@@ -132,46 +114,6 @@ public class Meme {
 		this.memeCaption = memeCaption;
 	}
 
-	public Meme likes(Long likes) {
-		this.likes = likes;
-		return this;
-	}
-
-	/**
-	 * Get likes
-	 * 
-	 * @return likes
-	 **/
-	@Schema(description = "")
-
-	public Long getLikes() {
-		return likes;
-	}
-
-	public void setLikes(Long likes) {
-		this.likes = likes;
-	}
-
-	public Meme dislikes(Long dislikes) {
-		this.dislikes = dislikes;
-		return this;
-	}
-
-	/**
-	 * Get dislikes
-	 * 
-	 * @return dislikes
-	 **/
-	@Schema(description = "")
-
-	public Long getDislikes() {
-		return dislikes;
-	}
-
-	public void setDislikes(Long dislikes) {
-		this.dislikes = dislikes;
-	}
-
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -182,13 +124,12 @@ public class Meme {
 		}
 		Meme meme = (Meme) o;
 		return Objects.equals(this.id, meme.id) && Objects.equals(this.memeName, meme.memeName)
-				&& Objects.equals(this.memeUrl, meme.memeUrl) && Objects.equals(this.memeCaption, meme.memeCaption)
-				&& Objects.equals(this.likes, meme.likes) && Objects.equals(this.dislikes, meme.dislikes);
+				&& Objects.equals(this.memeUrl, meme.memeUrl) && Objects.equals(this.memeCaption, meme.memeCaption);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, memeName, memeUrl, memeCaption, likes, dislikes);
+		return Objects.hash(id, memeName, memeUrl, memeCaption);
 	}
 
 	@Override
@@ -200,8 +141,6 @@ public class Meme {
 		sb.append("    memeName: ").append(toIndentedString(memeName)).append("\n");
 		sb.append("    memeUrl: ").append(toIndentedString(memeUrl)).append("\n");
 		sb.append("    memeCaption: ").append(toIndentedString(memeCaption)).append("\n");
-		sb.append("    likes: ").append(toIndentedString(likes)).append("\n");
-		sb.append("    dislikes: ").append(toIndentedString(dislikes)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

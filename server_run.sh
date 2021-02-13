@@ -20,6 +20,7 @@ nohup java -jar $JAR_NAME &
 cd ../../$FRONTEND_DIR
 
 #start app
+cp properties.txt .env.local
 npm install
 
 npm start &

@@ -11,5 +11,14 @@ public class Constants {
 	public static final String RESPONSE_ID="id";
 	
 	public static final int LIMIT_VAL=100;
+	
+	public static final String name ="memeName";
+	
+	public static final String url ="memeUrl";
+	
+	public static final String caption="memeCaption";
+	
+	public static final String ADD ="A";
+	public static final String UPDATE="U";
 
 }

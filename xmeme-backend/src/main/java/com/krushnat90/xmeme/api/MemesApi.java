@@ -28,13 +28,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+/**
+ * @author Krishnakant Thakur
+ *
+ */
 public interface MemesApi {
 
     @Operation(summary = "Add new Meme", description = "", tags={ "XMemeMain" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Meme Added successfully", content = @Content(schema = @Schema(implementation = Long.class))),
         
-        @ApiResponse(responseCode = "405", description = "Invalid input") })
+        @ApiResponse(responseCode = "405", description = "Invalid input"),
+        @ApiResponse(responseCode = "409", description = "Conflicting with existing URL")})
     @RequestMapping(value = "/memes",
     	consumes = { "application/json" }, 
         produces = { "application/json" }, 
@@ -51,7 +56,7 @@ public interface MemesApi {
     ResponseEntity<List<Meme>> findLatestMemes();
 
 
-    @Operation(summary = "Fetch a mem using its unique ID", description = "Returns a single Meme.", tags={ "XMemeMain" })
+    @Operation(summary = "Fetch a meme using its unique ID", description = "Returns a single Meme.", tags={ "XMemeMain" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Meme retrieved successfully", content = @Content(schema = @Schema(implementation = Meme.class))),
         
@@ -61,15 +66,28 @@ public interface MemesApi {
         method = RequestMethod.GET)
     ResponseEntity<Meme> getMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") Long memeId);
     
-    @Operation(summary = "Update a mem using its unique ID", description = "Updates a single Meme.", tags={ "XMemeMain" })
+    @Operation(summary = "Update a meme using its unique ID", description = "Updates a single Meme.", tags={ "XMemeMain" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Meme updated successfully", content = @Content(schema = @Schema(implementation = Meme.class))),
         
-        @ApiResponse(responseCode = "404", description = "There is no Meme present for the given Meme ID") })
+        @ApiResponse(responseCode = "404", description = "There is no Meme present for the given Meme ID"),
+        @ApiResponse(responseCode = "405", description = "Invalid input"),
+        @ApiResponse(responseCode = "409", description = "Conflicting with existing URL")})
     @RequestMapping(value = "/memes/{memeId}",
         consumes = { "application/json" }, 
         method = RequestMethod.PATCH)
     ResponseEntity<Meme> updateMemeById(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeId") Long memeId, @NotNull @Valid @RequestBody Meme meme);
+    
+    
+    @Operation(summary = "Fetch memes using its poster name", description = "Returns a list of Memes.", tags={ "XMemeMain" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Memes retrieved successfully", content = @Content(schema = @Schema(implementation = Meme.class))),
+        
+        @ApiResponse(responseCode = "404", description = "There is no Meme present for the given name") })
+    @RequestMapping(value = "/memes/findByName/{memeName}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<List<Meme>> getMemeByName(@Parameter(in = ParameterIn.PATH, description = "ID of Meme to return", required=true, schema=@Schema()) @PathVariable("memeName") String memeName);
 
 }
 

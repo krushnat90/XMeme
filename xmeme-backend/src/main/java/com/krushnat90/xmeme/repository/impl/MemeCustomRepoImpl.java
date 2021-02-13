@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,10 @@ import com.krushnat90.xmeme.model.MemeSequence;
 import com.krushnat90.xmeme.repository.MemeCustomRepository;
 import com.krushnat90.xmeme.repository.MemeRepository;
 
+/**
+ * @author Krishnakant Thakur
+ *
+ */
 @Repository
 public class MemeCustomRepoImpl implements MemeCustomRepository {
 
@@ -31,6 +36,7 @@ public class MemeCustomRepoImpl implements MemeCustomRepository {
 	@Autowired
 	MongoTemplate mongoTemplate;
 
+	
 	@Override
 	public Long getMemeId() {
 
@@ -66,6 +72,21 @@ public class MemeCustomRepoImpl implements MemeCustomRepository {
 	@Override
 	public void updateMemeById(Meme meme) {
 		mongoTemplate.save(meme);
+	}
+
+	@Override
+	public Long checkDuplicateMeme(Meme meme) {
+		Long occur = 0L;
+		occur = mongoTemplate.count(new Query(Criteria.where(Constants.url).is(meme.getMemeUrl())),Meme.class);
+		return occur;
+	}
+
+	@Override
+	public List<Meme> getLatestMemes(String name) {
+		log.debug("Inside get latest Repo by name");
+		List<Meme> memes = mongoTemplate.find(new Query(Criteria.where(Constants.name).is(name)).with(new Sort(Sort.Direction.DESC, "_id")).limit(Constants.LIMIT_VAL), Meme.class);
+		log.debug("Retreived "+memes.size()+" memes");
+		return memes;
 	}
 
 }
