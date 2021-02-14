@@ -3,6 +3,8 @@
 echo "Starting install..."
 
 process_var="INSTALL"
+BACKEND_DIR="xmeme-backend"
+TARGET_DIR="target"
 
 ### install basic ###
 
@@ -32,5 +34,13 @@ curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
 sudo apt install -y nodejs
 
+## BACKEND
+cd $BACKEND_DIR
+
+#build
+echo "$process_var maven install"
+mvn -e clean install
+
+cd ../
 
 echo "install done..."

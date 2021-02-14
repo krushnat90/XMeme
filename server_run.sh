@@ -7,15 +7,9 @@ FRONTEND_DIR="xmeme-frontend"
 TARGET_DIR="target"
 JAR_NAME="XMeme-1.0.jar"
 
-## BACKEND
-cd $BACKEND_DIR
-
-#build
-echo "$process_var maven install"
-mvn -e clean install
 
 #run
-cd $TARGET_DIR
+cd $BACKEND_DIR/$TARGET_DIR
 
 echo "$process_var starting server"
 nohup java -jar $JAR_NAME &
@@ -29,7 +23,7 @@ echo "$process_var npm install"
 npm install
 
 echo "$process_var npm start"
-npm start &
+nohup npm start &
 
 echo "server install end..."
 
