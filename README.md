@@ -18,4 +18,5 @@ install.sh : Installs all necessary softwares necessary to run the API and frone
 server_run.sh : Builds and starts API and frotend server
 
 sleep.sh : Sleeps for 5 minutes
+
 _These scripts will run on Ubuntu/Linux machines._
