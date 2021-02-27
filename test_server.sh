@@ -1,7 +1,7 @@
 !/bin/bash
 
 GIT_USER="krushnat90"
-GIT_PAT="1gytsb2Nix5htwsJNEsG"
+GIT_PAT="<GIT Public Access Token to clone repository>"
 GIT_REPO="https://$GIT_USER:$GIT_PAT@gitlab.crio.do/COHORT_ME_BUILDOUT_XMEME_ENROLL_1612436694845/krushnat90-me_buildout_xmeme.git"
 CODE_DIR="krushnat90-me_buildout_xmeme"
 
